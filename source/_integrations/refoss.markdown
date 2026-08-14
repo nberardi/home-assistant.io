@@ -27,15 +27,17 @@ Integrate Refoss devices into Home Assistant.
 {% include integrations/config_flow.md %}
 
 {% configuration_basic %}
-IP address:
-  description: The IPv4 address of a Refoss device. Leave this field blank to discover all Refoss devices on the same network automatically.
+IP addresses:
+  description: The IPv4 address of each Refoss device. Leave this list empty to discover all Refoss devices on the same network automatically.
   required: false
-  type: string
+  type: list
 {% endconfiguration_basic %}
 
-If a device is on another network or VLAN, enter its IPv4 address. The networks must have routed connectivity. Firewall rules must allow UDP traffic from Home Assistant to the device on port 9988, UDP responses to Home Assistant on port 9989, and HTTP traffic from Home Assistant to the device on TCP port 80.
+If devices are on another network or VLAN, add each IPv4 address to the list. The networks must have routed connectivity. Firewall rules must allow UDP traffic from Home Assistant to each device on port 9988, UDP responses to Home Assistant on port 9989, and HTTP traffic from Home Assistant to each device on TCP port 80.
 
-Entering an IP address configures the integration for that Refoss device only. To change between automatic discovery and a specific IP address, go to {% my integrations title="**Settings** > **Devices & services**" %}, select {% icon "mdi:dots-vertical" %} for the Refoss integration entry, and select **Reconfigure**.
+### Adding or removing devices
+
+To add or remove device IP addresses, go to {% my integrations title="**Settings** > **Devices & services**" %}, select {% icon "mdi:dots-vertical" %} for the Refoss integration entry, and select **Reconfigure**. Add or remove addresses in the **IP addresses** list, then submit the form. Removing all addresses returns the integration to automatic broadcast discovery.
 
 ## Supported device models
 
@@ -48,7 +50,7 @@ Entering an IP address configures the integration for that Refoss device only. T
  
 ## Device discovery
 
-With automatic discovery, Home Assistant sends a UDP broadcast every 30 seconds to find Refoss devices on the same network. With a configured IP address, Home Assistant sends the same discovery request directly to that device instead.
+With automatic discovery, Home Assistant sends a UDP broadcast every 30 seconds to find Refoss devices on the same network. With configured IP addresses, Home Assistant sends the same discovery request directly to each device instead.
   
 ## Entity naming
 
@@ -84,8 +86,8 @@ Long-press the button on the device to reset it.
 If the Refoss device isn't discovered by Home Assistant automatically, follow these steps:
 
 1. If the device is on the same network as Home Assistant, verify that UDP broadcasts are not blocked.
-2. If the device is on another network or VLAN, select **Reconfigure**, enter the device's IPv4 address, and verify that the networks can route traffic between each other.
-3. Verify that firewall rules allow outbound UDP traffic to the device on port 9988, inbound UDP responses to Home Assistant on port 9989, and outbound HTTP traffic to the device on TCP port 80.
+2. If devices are on another network or VLAN, select **Reconfigure**, add each device's IPv4 address, and verify that the networks can route traffic between each other.
+3. Verify that firewall rules allow outbound UDP traffic to each device on port 9988, inbound UDP responses to Home Assistant on port 9989, and outbound HTTP traffic to each device on TCP port 80.
 4. Verify that the device firmware version matches the supported versions listed above.
 
 If the device is still not discovered, enable debug logging for the integration:
